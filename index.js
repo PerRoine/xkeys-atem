@@ -12,6 +12,12 @@ atem.on('connectionStateChange', function(state) {
   console.log('state', state);
   myXkeysPanel.setAllBacklights(false,false);
   myXkeysPanel.setAllBacklights(false,true);
+  myXkeysPanel.setBacklight(24,true,true);
+  myXkeysPanel.setBacklight(24,true,false);
+  myXkeysPanel.setBacklight(25,true,false);
+  myXkeysPanel.setBacklight(25,true,true);
+  myXkeysPanel.setBacklight(26,true,false);
+  myXkeysPanel.setBacklight(26,true,true);
   myXkeysPanel.setFrequency(50)
 });
 
@@ -35,9 +41,6 @@ source2xkey = {
   atem.on('previewBus', function(source, inTransition) {
     var old_pvw = currentPVW;
     currentPVW = source;
-    console.log('prw source', source);
-    console.log('prw button',source2xkey[source]);
-    console.log('old prw source',old_pvw);
     myXkeysPanel.setBacklight(source2xkey[source],true,false);
     if (old_pvw !== null){
     myXkeysPanel.setBacklight(source2xkey[old_pvw],false,false);
@@ -48,9 +51,6 @@ source2xkey = {
   atem.on('programBus', function(source, inTransition) {
     var old_pgm = currentPGM;
     currentPGM = source;
-    console.log('pgm source', source);
-    console.log('pgm button',source2xkey[source]);
-    console.log('old pgm source',old_pgm);
     myXkeysPanel.setBacklight(source2xkey[source],true,true,true);
     if (old_pgm !== null){
     myXkeysPanel.setBacklight(source2xkey[old_pgm],false,true);
@@ -75,32 +75,3 @@ myXkeysPanel.on('down', keyIndex => {
   };
 
   });
-
-
-/*
-  self.currentPGM = null;
-	self.currentPVW = null;
-
-  self.myXkeysPanel.setAllBacklights(false, false)
-  self.myXkeysPanel.setAllBacklights(true, false)
-  self.myXkeysPanel.setBacklight(24, true, true);
-  self.myXkeysPanel.setBacklight(25, true, true);
-  self.myXkeysPanel.setBacklight(26, true, true);
-  self.atem.connect();
-
-
-  // Incoming event when connection state changes on ATEM
-  self.atem.on('connectionStateChange', function(state) {
-    console.log("connectionStateChange()",state);
-    if (state.description == 'connected') self.connected = true;
-  });
-
-
-  // Incoming event when connection to ATEM is lost
-  self.atem.on('connectionLost', function() {
-    console.log('connectionLost(): reconnecting');
-    self.connected = false;
-    self.atem.connect();
-  }
-};
-*/
