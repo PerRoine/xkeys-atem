@@ -1,0 +1,15 @@
+{
+  "name": "xkeys-atem",
+  "version": "1.0.0",
+  "description": "atem controller for x-keys ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Per Roine",
+  "license": "MIT",
+  "dependencies": {
+    "atem": "^0.1.8",
+    "xkeys": "^0.1.1"
+  }
+}
