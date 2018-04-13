@@ -4,8 +4,8 @@ var atem   			   = new ATEM();
 var myXkeysPanel	 = new XKeys();
 var currentPGM     = null;
 var currentPVW     = null;
-
-atem.ip = "10.0.1.240";
+var pgmMode        = false;
+atem.ip = "10.20.30.29";
 atem.connect();
 
 atem.on('connectionStateChange', function(state) {
@@ -24,18 +24,21 @@ atem.on('connectionStateChange', function(state) {
 
 
 source2xkey = {
-    0: 5,
-		1: 4,
-		2: 3,
-		3: 2,
-		4: 1,
-		5: 0,
-		6: 13,
-		7: 12,
-		8: 11,
-		3010: 10,
-		3020: 9,
-		1000: 8
+    1: 5,
+		2: 4,
+		3: 3,
+		4: 2,
+		5: 1,
+		6: 0,
+		7: 13,
+		8: 12,
+    9: 11,
+    10:10,
+
+		3010: 9,
+		3020: 8,
+		1000: 20,
+		0: 21
 	};
 
   atem.on('previewBus', function(source, inTransition) {
@@ -65,13 +68,33 @@ myXkeysPanel.on('down', keyIndex => {
 
   if (keyIndex == 26) atem.cut();
 
-  else {
+  if (keyIndex == 'PS') {
+      pgmMode = pgmMode ? false : true;
+      console.log(pgmMode);
+        if (pgmMode == true){
+          myXkeysPanel.setLED(1,true)
+          myXkeysPanel.setLED(0,false)
+        };
+        if (pgmMode == false){
+          myXkeysPanel.setLED(0,true)
+          myXkeysPanel.setLED(1,false)
+        };
+
+  };
+
     for (var atemSource in source2xkey) {
       var xKey = source2xkey[atemSource];
       if (xKey == keyIndex) {
-  atem.setPreview(atemSource);
+
+        if (pgmMode == false){
+          atem.setPreview(atemSource);
+        };
+
+        if (pgmMode == true){
+          atem.setProgram(atemSource);
+        };
       }
     }
-  };
+
 
   });
